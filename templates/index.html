@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <style>
+        /* Основные стили для body */
+        body {
+            font-family: Arial, sans-serif; /* Шрифт для всей страницы */
+            background-color: #f4f4f4; /* Светло-серый цвет фона */
+            display: flex; /* Используем Flexbox для центрирования */
+            justify-content: center; /* Центрирование по горизонтали */
+            align-items: center; /* Центрирование по вертикали */
+            height: 100vh; /* Высота body равна высоте экрана */
+            margin: 0; /* Убираем отступы по умолчанию */
+            flex-direction: column; /* Элементы располагаются вертикально */
+        }
+
+        /* Стили для заголовка */
+        h1 {
+            color: #333; /* Темно-серый цвет текста */
+        }
+
+        /* Стили для формы */
+        form {
+            margin-bottom: 20px; /* Отступ снизу */
+        }
+
+        /* Стили для текстового поля ввода */
+        input[type="text"] {
+            padding: 10px; /* Внутренние отступы */
+            width: 300px; /* Ширина поля */
+            border: 1px solid #ddd; /* Серая рамка */
+            border-radius: 4px; /* Закругленные углы */
+            margin-right: 10px; /* Отступ справа */
+        }
+
+        /* Стили для кнопки "Добавить" */
+        button {
+            padding: 10px 20px; /* Внутренние отступы */
+            background-color: #5cb85c; /* Зеленый цвет фона */
+            color: white; /* Белый цвет текста */
+            border: none; /* Убираем рамку */
+            border-radius: 4px; /* Закругленные углы */
+            cursor: pointer; /* Курсор в виде указателя */
+        }
+
+        /* Стили для кнопки при наведении */
+        button:hover {
+            background-color: #4cae4c; /* Темно-зеленый цвет фона */
+        }
+
+        /* Стили для списка задач */
+        ul {
+            list-style-type: none; /* Убираем маркеры списка */
+            padding: 0; /* Убираем отступы по умолчанию */
+        }
+
+        /* Стили для каждой задачи */
+        li {
+            background-color: white; /* Белый цвет фона */
+            padding: 10px; /* Внутренние отступы */
+            margin-bottom: 10px; /* Отступ снизу */
+            border: 1px solid #ddd; /* Серая рамка */
+            border-radius: 4px; /* Закругленные углы */
+            display: flex; /* Используем Flexbox для выравнивания */
+            justify-content: space-between; /* Распределение пространства */
+            align-items: center; /* Выравнивание по центру */
+            width: 380px; /* Ширина элемента */
+        }
+
+        /* Стили для ссылки "Удалить" */
+        a {
+            color: #d9534f; /* Красный цвет текста */
+            text-decoration: none; /* Убираем подчеркивание */
+        }
+
+        /* Стили для ссылки при наведении */
+        a:hover {
+            text-decoration: underline; /* Подчеркивание при наведении */
+        }
+    </style>
+</head>
+<body>
+    <!-- Заголовок страницы -->
+    <h1>To-Do List</h1>
+
+    <!-- Форма для добавления новой задачи -->
+    <form action="{{ url_for('add_task') }}" method="POST">
+        <input type="text" name="task" placeholder="New task:" required>
+        <button type="submit">Добавить</button>
+    </form>
+
+    <!-- Список задач -->
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <!-- Номер задачи и текст задачи -->
+                <span>{{ loop.index }}. {{ task }}</span>
+                <!-- Ссылка для удаления задачи -->
+                <a href="{{ url_for('delete_task', task_id=loop.index0) }}">Удалить</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
